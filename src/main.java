@@ -29,18 +29,31 @@ public class main {
         /* Solving problem */
         // Create an AMPL instance
         AMPL ampl = new AMPL();
-        ampl.setOption("solver", "cplexamp");
+        ampl.setOption("solver", "ilogcp");
         // Interpret the two files
         try {
-        ampl.read("ampl/diet.mod");
-        ampl.readData("ampl/diet.dat");
-
+        ampl.read("ampl/pizza.mod");
+        //ampl.readData("ampl/pizza.dat");
+        Parameter KMax = ampl.getParameter("Kmax");
+        KMax.set(3);
+        Parameter RMax = ampl.getParameter("Rmax");
+        RMax.set(R);
+        Parameter CMax = ampl.getParameter("Cmax");
+        CMax.set(C);
+        Parameter LParam = ampl.getParameter("L");
+        LParam.set(L);
+        Parameter HParam = ampl.getParameter("H");
+        HParam.set(H);
+        
+        Parameter TParam = ampl.getParameter("T");
+        TParam.setValues(pizza, false);
+        System.out.println("Pizza: " + TParam.getValues().toString());
         // Solve
         ampl.solve();
         // Get objective entity by AMPL name
-        Objective totalcost = ampl.getObjective("total_cost");
+        Objective cells = ampl.getObjective("cells");
         // Print it
-        System.out.format("ObjectiveInstance is: %f%n", totalcost.value());
+        System.out.format("ObjectiveInstance is: %f%n", cells.value());
       } finally {
           ampl.close();
       }
