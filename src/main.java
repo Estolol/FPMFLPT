@@ -1,31 +1,6 @@
 import java.util.Scanner;
 import java.util.LinkedList;
 
-class slice {
-  public int r1;
-  public int c1;
-  public int r2;
-  public int c2;
-
-  public slice(int r1, int c1, int r2, int c2) {
-    this.r1 = r1;
-    this.c1 = c1;
-    this.r2 = r2;
-    this.c2 = c2;
-  }
-
-  public slice() {
-    this.r1 = 0;
-    this.c1 = 0;
-    this.r2 = 0;
-    this.c2 = 0;
-  }
-
-  public void print() {
-    System.out.println(r1 + " " + c1 + " " + r2 + " " + c2);
-  }
-}
-
 public class main {
   public static void main(String[] arg) {
         int R, C, L, H;
@@ -47,7 +22,7 @@ public class main {
         //printTable(pizza);
         /* Solving problem */
         //LinkedList<slice> slices = new LinkedList<slice>();
-        LinkedList<slice> slices = generateRandomSlices();
+        LinkedList<Slice> slices = generateRandomSlices();
         /* Output solution */
         int S = slices.size();
         System.out.println(S);
@@ -66,10 +41,10 @@ public class main {
           System.out.println("");
         }
       }
-      static LinkedList<slice> generateRandomSlices() {
-          LinkedList<slice> result = new LinkedList<slice>();
+      static LinkedList<Slice> generateRandomSlices() {
+          LinkedList<Slice> result = new LinkedList<Slice>();
           for (int i = 1; i < 10; i++) {
-            slice slice = new slice();
+            Slice slice = new Slice();
             slice.r1 = i;
             slice.r2 = i + 1;
             slice.c1 = i;
