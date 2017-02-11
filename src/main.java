@@ -1,26 +1,33 @@
-import com.jom.*;
-
+import java.util.Scanner;
 public class main {
-    //  Minimize z = -.5 * x1 + .5 * x2 - x3 + 1
-    //
-    //  subject to
-    //  0.0 <= x1 - .5 * x2 <= 0.2
-    //  -x2 + x3 <= 0.4
-    //  where,
-    //  0.0 <= x1 <= 0.5
-    //  0.0 <= x2 <= 0.5
-    //  0.0 <= x3 <= 0.5
+  public static void main(String[] arg) {
+        System.out.println("Beginning");
+        int R, C, L, H;
+        //Type; 0 = Mushroom, 1 = Tomato
+        Scanner in = new Scanner(System.in);
+        R = in.nextInt();
+        C = in.nextInt();
+        L = in.nextInt();
+        H = in.nextInt();
+        in.nextLine();
+        int[][] pizza = new int[R][C];
+        for (int i = 0; i < R; i++) {
+          String row = in.nextLine();
+           for (int j = 0; j < C; j++) {
+            pizza[i][j] = (row.charAt(j) == 'T') ? 1 : 0;
+          }
+        }
+        printTable(pizza);
+      }
 
-    public static void main(String[] arg) {
-      OptimizationProblem op = new OptimizationProblem();
-      int N = 5;
-      op.addDecisionVariable("x", true, new int[] { 5 , 5 , 5 }, 0, 1);
-      op.setInputParameter("c", new DoubleMatrixND(new int [] { N , N , N} , "random"));
-      op.setObjectiveFunction("maximize", "sum(x .* c)");
-      op.addConstraint(" sum(sum(x,2),1) <= 1");
-      op.solve("glpk", new Object[]{"solverLibraryName", "libglpk.so.36"});
-      if (!op.solutionIsOptimal ()) throw new RuntimeException ("An optimal solution was not found");
-      DoubleMatrixND sol = op.getPrimalSolution("x");
-      System.out.println(sol.toString());
-    }
+      static void printTable(int[][] table) {
+        int R = table.length;
+        int C = table[0].length;
+        for (int i = 0; i < R; i++) {
+          for (int j = 0; j < C; j++) {
+            System.out.print(table[i][j] + " ");
+          }
+          System.out.println("");
+        }
+      }
 }
