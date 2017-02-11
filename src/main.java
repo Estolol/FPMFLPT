@@ -12,7 +12,7 @@ public class main {
         L = in.nextInt();
         H = in.nextInt();
         in.nextLine();
-        int[][] pizza = new int[R][C];
+        double[][] pizza = new double[R][C];
         for (int i = 0; i < R; i++) {
           String row = in.nextLine();
            for (int j = 0; j < C; j++) {
@@ -23,6 +23,7 @@ public class main {
         /* Solving problem */
         //LinkedList<slice> slices = new LinkedList<slice>();
         LinkedList<Slice> slices = generateRandomSlices();
+
         /* Output solution */
         int S = slices.size();
         System.out.println(S);
