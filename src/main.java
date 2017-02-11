@@ -1,8 +1,14 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.LinkedList;
+import com.ampl.AMPL;
+import com.ampl.DataFrame;
+import com.ampl.Objective;
+import com.ampl.Parameter;
+import com.ampl.Variable;
 
 public class main {
-  public static void main(String[] arg) {
+  public static void main(String[] arg) throws IOException {
         int R, C, L, H;
         //Type; 0 = Mushroom, 1 = Tomato
         /* Scanning input */
@@ -12,7 +18,7 @@ public class main {
         L = in.nextInt();
         H = in.nextInt();
         in.nextLine();
-        int[][] pizza = new int[R][C];
+        double[][] pizza = new double[R][C];
         for (int i = 0; i < R; i++) {
           String row = in.nextLine();
            for (int j = 0; j < C; j++) {
@@ -21,8 +27,30 @@ public class main {
         }
         //printTable(pizza);
         /* Solving problem */
+        // Create an AMPL instance
+        AMPL ampl = new AMPL();
+        ampl.setOption("solver", "cplexamp");
+        // Interpret the two files
+        try {
+        ampl.read("ampl/diet.mod");
+        ampl.readData("ampl/diet.dat");
+
+        // Solve
+        ampl.solve();
+        // Get objective entity by AMPL name
+        Objective totalcost = ampl.getObjective("total_cost");
+        // Print it
+        System.out.format("ObjectiveInstance is: %f%n", totalcost.value());
+      } finally {
+          ampl.close();
+      }
+        
+
         //LinkedList<slice> slices = new LinkedList<slice>();
         LinkedList<Slice> slices = generateRandomSlices();
+
+
+
         /* Output solution */
         int S = slices.size();
         System.out.println(S);
